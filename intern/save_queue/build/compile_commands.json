@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/artsiomh/intern/save_queue/build/src",
+  "command": "/usr/bin/g++   -g -o CMakeFiles/main.dir/main.cpp.o -c /home/artsiomh/intern/save_queue/src/main.cpp",
+  "file": "/home/artsiomh/intern/save_queue/src/main.cpp",
+  "output": "src/CMakeFiles/main.dir/main.cpp.o"
+}
+]

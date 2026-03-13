@@ -1,0 +1,5 @@
+/home/artsiomh/intern/save_queue/build/CMakeFiles/edit_cache.dir
+/home/artsiomh/intern/save_queue/build/CMakeFiles/rebuild_cache.dir
+/home/artsiomh/intern/save_queue/build/src/CMakeFiles/main.dir
+/home/artsiomh/intern/save_queue/build/src/CMakeFiles/edit_cache.dir
+/home/artsiomh/intern/save_queue/build/src/CMakeFiles/rebuild_cache.dir
