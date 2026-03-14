@@ -1,94 +1,93 @@
 #include <iostream>
 #include <random>
+
 using namespace std;
+using ll = long long;
+
 const int MAXN = 1e3;
 
-struct node {
-  node *l;
-  node *r;
-  int val;
+
+struct bst{
+    struct node {
+        node *l, *r, *p;
+        int val, depth;
+        node(int x, node *prev = nullptr) : val(x), depth(0), l(nullptr), r(nullptr), p(prev) {}
+    };
+    node *root;
+    bst(int x) {
+        root = new node(x);
+    }
+
+    void add(node* &cur, int x, node* prev = nullptr){
+        if(!cur){
+            cur = new node(x, prev);
+            cur->depth = (prev ? 1 + prev->depth : 0);
+            return;
+        }
+        if(x > cur->val) add(cur->r, x, cur);
+        else if(x < cur->val) add(cur->l, x, cur);
+    }
+    node* find(node *root, int x) {
+        if(!root) return nullptr;
+        if(root->val == x) return root;
+        if(x < root->val) return find(root->l, x);
+        else return find(root->r, x);
+    }
+
+    void remove(node* &cur, int k) {
+        if(!cur) return;
+        if(k < cur->val) remove(cur->l, k);
+        else if(k > cur->val) remove(cur->r, k);
+        else {
+            if(!cur->l){
+                node* temp = cur->r;
+                if(temp) temp->p = cur->p;
+                delete cur;
+                cur = temp;
+            } else if(!cur->r){
+                node* temp = cur->l;
+                if(temp) temp->p = cur->p;
+                delete cur;
+                cur = temp;
+            } else if(!(cur->r && cur->l)){
+                node* next = cur->r;
+                while(next->l) next = next->l;
+                cur->val = next->val;
+                remove(cur->r, next->val);
+            }
+        }
+    }
+    void inorder(node* cur) {
+        if(!cur) return;
+        inorder(cur->l);
+        cout << cur->val << " " << cur->depth << '\n';
+        inorder(cur->r);
+    }
+    void preorder(node* cur) {
+        if(!cur) return;
+        cout << cur->val << " " << cur->depth << '\n';
+        inorder(cur->r);
+        preorder(cur->l);
+        preorder(cur->r);
+    }
+    void path(node *src, node *dest){
+
+    }
 };
 
-void insert(node* &root, int val) {
-  if(!root){
-    root = new node;
-    root->val = val;
-    root->l = root->r = nullptr;
-    return;
-  }
-  if(val > root->val) insert(root->r, val);
-  else if(val < root->val) insert(root->l, val);
-}
-
-node* search(node *root, int key) {
-  if(!root) return nullptr;
-  if(root->val == key) return root;
-  if(key < root->val) return search(root->l, key);
-  else return search(root->r, key);
-}
-
-
-void remove (node* &root, int k) {
-  if(!root) return;
-  if(root -> val != k){
-    if(k < root -> val) remove(root -> l, k);
-    else remove(root -> r, k);
-    return;
-  }
-  if(!root->l && !root->r){
-    delete root;
-    root = NULL;
-    return;
-  }
-  if(root->l && !root->r){
-    node* temp = root;
-    root = root->l;
-    delete temp;
-    return;
-  }
-  if(!root->l && root->r){
-    node* temp = root;
-    root = root->r;
-    delete temp;
-    return;
-  }
-  if(!(root->r->l)){
-    root->val = root->r->val;
-    node* temp = root->r;
-    root->r = root->r->r;
-    delete temp;
-    return;
-  }
-  node* minR = root->r;
-  node* parent = root;
-  while(minR->l){
-    parent = minR;
-    minR = minR->l;
-  }
-  root->val = minR->val;
-  parent->l = minR->r;
-  delete minR;
-}
-
-void preorder(node* root) {
-  if(!root) return;
-  cout << root->val << " ";
-  preorder(root->l);
-  preorder(root->r);
-}
 void solve(){
-  int n; cin >> n;
-  node *tree = new node();
-  cout << "arr: ";
-  for(int i = 0; i < n; ++i){
-    int x = rand() % MAXN;
-    cout << x << ' ';
-    insert(tree, x);
-  }
-  cout << "\n";
-  cout << "preorder : ";
-  preorder(tree);
-  cout << "\n";
+    int n; cin >> n;
+    int x; cin >> x;
+    bst t(x);
+    for(int i = 0; i < n - 1; ++i){
+        cin >> x;
+        t.add(t.root, x);
+    }
+    t.inorder(t.root); 
+    cout << '\n';
+    // t.remove(t.root, 11);
+    // t.inorder(t.root); 
+    // cout << '\n';
 }
 int main(){
   ios_base::sync_with_stdio(false);
