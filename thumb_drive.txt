@@ -1,0 +1,20 @@
+#FLASHING DRIVE:
+lsblk
+if auto mounted : sudo umount /dev/sda*
+
+sudo dd if=(file.iso) of=/dev/sdb bs=4M status=progress oflag=sync
+
+sync (write it to flush buffers)
+
+sudo umount /dev/(path)
+sudo eject /dev/(path)
+
+
+#HOW TO FORMAT DRIVE?
+lsblk
+unmount /sdb*
+sudo wipefs -a /dev/sdb
+sudo fdisk /dev/sdb
+THERE: o, n, w, default where choice
+sudo mkfs.vfat -F32 /dev/sdb1
+
